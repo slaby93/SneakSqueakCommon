@@ -1,0 +1,39 @@
+Authorization service API:
+
+Authorization:
+
+GET: /user/authorize?userName=<name>&userPassword=<password>
+401:
+{
+    "authorizationResult": "USER_NOT_EXISTS",
+    "success": false
+}
+
+GET: /user/authorize?userName=<name>&userPassword=<password>
+200:
+{
+    "authorizationResult": "AUTHORIZED",
+    "token": "eyJhbGciOiJub25lIn0.eyJhdWQiOiJmcm9udC1lbmQiLCJqdGkiOiJiMDkxZDEwNC0wY2E5LTQzMzMtYThkMC1iOGY3ZjI1NjZiODMiLCJpYXQiOjE1MTM0Njg4MDAsImV4cCI6MTUxMzU1NTIwMH0.",
+    "success": true
+}
+
+Registration:
+GET: /user/authorize?userName=<name>&userPassword=<password>
+401
+{
+    "authorizationResult": "INVALID_PASSWORD",
+    "success": false
+}
+
+GET: /user/register?userName=<name>&userPassword=<password>
+200:
+{
+    "success": true
+}
+
+GET: /user/register?userName=<name>&userPassword=<password>
+401:
+{
+    "authorizationResult": "USER_ALREADY_EXISTS",
+    "success": false
+}
