@@ -1,0 +1,56 @@
+version: "3"
+services:
+  web-client-service:
+    image: gsdsolutions/web-client-service:latest
+    networks:
+      - frontend
+    ports:
+      - "80:3000"
+    deploy:
+      replicas: 1
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - frontend
+  rest-api-proxy:
+    image: gsdsolutions/rest-api-proxy:latest
+    networks:
+      - frontend
+    ports:
+     - "81:3000"
+    deploy:
+      replicas: 1
+  eureka-service:
+    image: gsdsolutions/eureka-server:latest
+    networks:
+      - frontend
+    ports:
+     - "82:8761"
+    deploy:
+      replicas: 1
+  authorization-service:
+    image: gsdsolutions/authorization-service:latest
+    networks:
+      - frontend
+    ports:
+     - "83:3000"
+    deploy:
+      replicas: 1
+  redis-cluster-m-7006:
+    image: comodal/alpine-redis
+    networks:
+      - frontend
+    ports:
+     - "7006:6379"
+    deploy:
+      replicas: 1
+    command: ['--port', '6379', '--protected-mode', 'no']
+networks:
+  frontend:
